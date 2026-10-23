@@ -30,8 +30,8 @@ function aycicegiTohumu(mx, my, sira) {
     kalem.fillStyle = "rgb(200, 30, 30)";
     tohumCiz(x, y, 4);
   } else {
-    const parlaklik = 6 + (sira / 300) * 22;
-    kalem.fillStyle = "hsl(28, 70%, " + parlaklik + "%)";
+    const parlaklik = 25 + (sira / 300) * 45;
+    kalem.fillStyle = "hsl(0, 0%, " + parlaklik + "%)";
     tohumCiz(x, y, 2.4 + (sira / 300) * 1.2);
   }
 }
@@ -45,9 +45,9 @@ function isikCiz() {
     isikY,
     200,
   );
-  parilti.addColorStop(0, "rgba(255, 230, 170, 0.55)");
-  parilti.addColorStop(0.4, "rgba(255, 190, 60, 0.25)");
-  parilti.addColorStop(1, "rgba(255, 150, 0, 0)");
+  parilti.addColorStop(0, "rgba(255, 255, 255, 0.5)");
+  parilti.addColorStop(0.4, "rgba(255, 255, 255, 0.2)");
+  parilti.addColorStop(1, "rgba(255, 255, 255, 0)");
   kalem.fillStyle = parilti;
   kalem.fillRect(0, 0, genislik, yukseklik);
 }
@@ -95,8 +95,8 @@ function yapraklariCiz(ilerleme) {
         ic,
         48 * acilma * boy,
         11 * en,
-        "hsl(30, 90%, 30%)",
-        "hsl(38, 95%, 45%)",
+        "hsl(0, 0%, 45%)",
+        "hsl(0, 0%, 75%)",
       );
     }
   }
@@ -110,8 +110,8 @@ function yapraklariCiz(ilerleme) {
         ic,
         44 * acilma * boy,
         10 * en,
-        "hsl(35, 95%, 40%)",
-        "hsl(48, 100%, 58%)",
+        "hsl(0, 0%, 65%)",
+        "hsl(0, 0%, 95%)",
       );
     }
   }
@@ -121,8 +121,8 @@ function sapYapragiCiz(x, y, aci, boy) {
   kalem.translate(x, y);
   kalem.rotate(aci);
   const renk = kalem.createLinearGradient(0, 0, boy, 0);
-  renk.addColorStop(0, "hsl(130, 50%, 18%)");
-  renk.addColorStop(1, "hsl(100, 50%, 36%)");
+  renk.addColorStop(0, "hsl(0, 0%, 30%)");
+  renk.addColorStop(1, "hsl(0, 0%, 60%)");
   kalem.fillStyle = renk;
   kalem.beginPath();
   kalem.moveTo(0, 0);
@@ -146,8 +146,8 @@ function aycicegiCiz(mx, my, ilerleme, adet) {
   const basY = my + Math.sin(yon) * 60 * olcek;
 
   const sapRengi = kalem.createLinearGradient(0, yukseklik, 0, basY);
-  sapRengi.addColorStop(0, "hsl(130, 45%, 12%)");
-  sapRengi.addColorStop(1, "hsl(105, 45%, 30%)");
+  sapRengi.addColorStop(0, "hsl(0, 0%, 20%)");
+  sapRengi.addColorStop(1, "hsl(0, 0%, 55%)");
   kalem.strokeStyle = sapRengi;
   kalem.lineWidth = 4;
   kalem.lineCap = "round";
@@ -167,7 +167,7 @@ function aycicegiCiz(mx, my, ilerleme, adet) {
   kalem.scale(0.55 * olcek, olcek);
 
   yapraklariCiz(ilerleme);
-  kalem.fillStyle = "hsl(25, 60%, 5%)";
+  kalem.fillStyle = "hsl(0, 0%, 8%)";
   tohumCiz(0, 0, 75);
   for (let s = 0; s < adet; s++) {
     aycicegiTohumu(0, 0, s);
@@ -175,11 +175,57 @@ function aycicegiCiz(mx, my, ilerleme, adet) {
 
   kalem.restore();
 }
+const RAKAM_SAYISI = 40;
+const rakamlar = [];
+const rakamBaslangic = yukseklik * 0.06;
+const rakamBitis = yukseklik * 0.38;
+
+function rakamOlustur() {
+  const x = isikX + (Math.random() - 0.5) * 120 * olcek;
+  return {
+    x: x,
+    y: rakamBaslangic + Math.random() * 20,
+    hiz: 0.2 + Math.random() * 0.3,
+    kayma: (x - isikX) * 0.004,
+    deger: Math.random() < 0.5 ? "0" : "1",
+    boy: 10 + Math.random() * 6,
+  };
+}
+
+for (let r = 0; r < RAKAM_SAYISI; r++) {
+  const rakam = rakamOlustur();
+  const yol = Math.random() * (rakamBitis - rakamBaslangic);
+  rakam.y += yol;
+  rakam.x += (rakam.kayma * yol) / rakam.hiz;
+  rakamlar.push(rakam);
+}
+
+function rakamlariCiz() {
+  kalem.save();
+  kalem.shadowColor = "white";
+  kalem.shadowBlur = 8;
+  for (let r = 0; r < RAKAM_SAYISI; r++) {
+    const rakam = rakamlar[r];
+    rakam.y += rakam.hiz;
+    rakam.x += rakam.kayma;
+    const oran = (rakam.y - rakamBaslangic) / (rakamBitis - rakamBaslangic);
+    if (oran >= 1) {
+      rakamlar[r] = rakamOlustur();
+      continue;
+    }
+    const saydamlik = 0.6 * Math.min(1, oran * 5) * (1 - oran);
+    kalem.fillStyle = "rgba(255, 255, 255, " + saydamlik + ")";
+    kalem.font = rakam.boy * olcek + 4 + "px monospace";
+    kalem.fillText(rakam.deger, rakam.x, rakam.y);
+  }
+  kalem.restore();
+}
 let i = 0;
 
 function sahneyiCiz() {
   kalem.clearRect(0, 0, genislik, yukseklik);
   isikCiz();
+  rakamlariCiz();
   const ilerleme = i / 300;
 
   const solX = genislik * (telefon ? 0.13 : 0.2);
@@ -191,8 +237,8 @@ function sahneyiCiz() {
 
   if (i < 300) {
     i++;
-    requestAnimationFrame(sahneyiCiz);
   }
+  requestAnimationFrame(sahneyiCiz);
 }
 
 sahneyiCiz();
