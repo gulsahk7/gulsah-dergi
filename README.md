@@ -16,7 +16,7 @@ Bu depo, edebiyat, yazılım ve felsefe üzerine bir sanat dergisi için her ay 
 - Kaydırma olmadan tam ekran görünüm
 - Her ay için ayrı klasör yapısı
 ## Canlı Demo
-Live: https://gulsah-dergi.vercel.app/ekim-aycicegi-mj/
+Live: https://gulsahk7.github.io/gulsah-dergi/ekim-aycicegi-mj/
 
 GitHub: https://github.com/gulsahk7/gulsah-dergi
 ## Projenin Çalıştırılması
