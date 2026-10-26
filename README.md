@@ -1,13 +1,18 @@
 # gulsah-dergi
+
 Bu depo, edebiyat, yazılım ve felsefe üzerine bir sanat dergisi için her ay hazırlanan küçük web projelerini içerir. Okuyucu dergideki QR kodu okuttuğunda telefonunda o ayın animasyonu ve metni açılır. Her ay ayrı bir klasörde yer alır.
+
 ## Kullanılan Teknolojiler
+
 - HTML5
 - CSS3
 - JavaScript (ES6+)
 - Canvas 2D API
 - Responsive Design (telefon ve masaüstü)
-- Vercel (Deployment)
+- GitHub Pages (Deployment)
+
 ## Özellikler
+
 - Altın açıyla (137.5°) yerleşen tohumlar
 - Işığa doğru dönen ayçiçeği başları
 - Yavaşça açılan yapraklar
@@ -15,11 +20,15 @@ Bu depo, edebiyat, yazılım ve felsefe üzerine bir sanat dergisi için her ay 
 - Telefona özel yerleşim
 - Kaydırma olmadan tam ekran görünüm
 - Her ay için ayrı klasör yapısı
+
 ## Canlı Demo
+
 Live: https://gulsahk7.github.io/gulsah-dergi/ekim-aycicegi-mj/
 
 GitHub: https://github.com/gulsahk7/gulsah-dergi
+
 ## Projenin Çalıştırılması
+
 ```bash
 git clone https://github.com/gulsahk7/gulsah-dergi.git
 cd gulsah-dergi/ekim-aycicegi-mj
